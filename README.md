@@ -1,2 +1,0 @@
-# BestForAndroid
-本项目意在使用Android最好用的代码和设计模式
