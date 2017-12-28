@@ -1,21 +1,20 @@
 package android.forbest.android.base;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * @Description: http请求bean,根据后台返回的实际情况而定
+ * @Description: http请求bean, 根据后台返回的实际情况而定
  * @Author : ZhouHui
  * @Date : 2017/12/20.
  */
 
-public class BaseHttpBean <T, L> implements Serializable{
+public class BaseHttpBean<T> implements Serializable {
 
     private String execResult;
     private String execMsg;
     private String execCode;
     private T execData;
-    private List<L> execDatas;
+    private Object execDatas;
 
     public String getExecResult() {
         return execResult;
@@ -49,11 +48,11 @@ public class BaseHttpBean <T, L> implements Serializable{
         this.execData = execData;
     }
 
-    public List<L> getExecDatas() {
+    public Object getExecDatas() {
         return execDatas;
     }
 
-    public void setExecDatas(List<L> execDatas) {
+    public void setExecDatas(Object execDatas) {
         this.execDatas = execDatas;
     }
 }
