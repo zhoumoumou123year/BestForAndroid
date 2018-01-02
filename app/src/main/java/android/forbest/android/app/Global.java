@@ -10,5 +10,4 @@ public interface Global {
     /** token */
     String ACCESS_TOKEN = "accessToken";
     String DEVICE_NAME = "android";
-    String CODE_SUCCESS = "200";
 }

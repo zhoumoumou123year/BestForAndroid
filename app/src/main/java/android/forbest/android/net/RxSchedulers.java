@@ -12,7 +12,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class RxSchedulers {
-
+    /**
+     *
+     * @param <T> Api.getInstance().movieService.getGankData("Android",1).compose(RxSchedulers.io_main());
+     * @return
+     */
     public static <T> ObservableTransformer<T, T> io2Main() {
         return upstream -> upstream
                 .subscribeOn(Schedulers.io())

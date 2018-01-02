@@ -8,13 +8,13 @@ import java.io.Serializable;
  * @Date : 2017/12/20.
  */
 
-public class BaseHttpBean<T> implements Serializable {
+public class BaseHttpBean<T, V> implements Serializable{
 
     private String execResult;
     private String execMsg;
     private String execCode;
     private T execData;
-    private Object execDatas;
+    private V execDatas;
 
     public String getExecResult() {
         return execResult;
@@ -48,11 +48,11 @@ public class BaseHttpBean<T> implements Serializable {
         this.execData = execData;
     }
 
-    public Object getExecDatas() {
+    public V getExecDatas() {
         return execDatas;
     }
 
-    public void setExecDatas(Object execDatas) {
+    public void setExecDatas(V execDatas) {
         this.execDatas = execDatas;
     }
 }

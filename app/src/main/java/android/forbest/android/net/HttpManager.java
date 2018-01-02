@@ -31,27 +31,47 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpManager {
 
-    private static ApiService mApiService;
-
-    private static Retrofit mRetrofit = null;
-
-    private static OkHttpClient mOkHttpClient = null;
-
-    private Context mContext;
-    /** Http缓存文件名 */
+    /**
+     * Http缓存文件名
+     */
     private static final String HTTP_CACHE_NAME = "HttpCache";
-
     private static final int HTTP_CACHE_MAX_SIZE = 1024 * 1024;
-    /** 是否设置缓存 */
-    private boolean mIsUseCache;
     private static final String TAG = "OkHttp";
-    private int mMaxCacheTime = 60;
-    /** 设置默认连接超时时间 */
+    /**
+     * 设置默认连接超时时间
+     */
     private static final int DEFAULT_CONNTCT_TIME_OUT = 15;
-    /** 设置默认读取超时时间 */
+    /**
+     * 设置默认读取超时时间
+     */
     private static final int DEFAULT_READ_TIME_OUT = 20;
-    /** 设置默认写入超时时间 */
+    /**
+     * 设置默认写入超时时间
+     */
     private static final int DEFAULT_WRITE_TIME_OUT = 20;
+    private static volatile HttpManager mInstance = null;
+    private static Retrofit mRetrofit = null;
+    private static OkHttpClient mOkHttpClient = null;
+    private Context mContext;
+    /**
+     * 是否设置缓存
+     */
+    private boolean mIsUseCache;
+    private int mMaxCacheTime = 60;
+
+    /**
+     * 双重锁单例模式
+     */
+    public static HttpManager getInstance() {
+        if (mInstance == null) {
+            synchronized (HttpManager.class) {
+                if (mInstance == null) {
+                    mInstance = new HttpManager();
+                }
+            }
+        }
+        return mInstance;
+    }
 
     public int getMaxCacheTime() {
         return mMaxCacheTime;
@@ -76,9 +96,6 @@ public class HttpManager {
         this.mContext = context;
         initOkHttpClient();
         initRetrofit();
-        if (mApiService == null) {
-            mApiService = mRetrofit.create(ApiService.class);
-        }
     }
 
     /**
@@ -165,10 +182,8 @@ public class HttpManager {
                 .build();
     }
 
-    public ApiService getApiService() {
-        if (mApiService == null && mRetrofit != null) {
-            mApiService = mRetrofit.create(ApiService.class);
-        }
-        return mApiService;
+    public Retrofit getRetrofit() {
+        return mRetrofit;
     }
+
 }

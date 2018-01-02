@@ -1,11 +1,11 @@
 package android.forbest.android.base;
 
-import android.forbest.android.app.Global;
+import android.forbest.android.net.HttpCode;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @Description: 管理RxJava生命周期，避免内存泄露，RxJava处理服务器返回
@@ -18,11 +18,11 @@ public abstract class BaseRxActivity extends BaseActivity {
     /**
      * stop管理
      */
-    private CompositeSubscription mSubscription2Stop;
+    private CompositeDisposable mDisposable2Stop;
     /**
      * destroy管理
      */
-    private CompositeSubscription mSubscription2Destroy;
+    private CompositeDisposable mDisposable2Destroy;
 
     protected abstract boolean needHandlerResult(BaseHttpBean result);
 
@@ -32,10 +32,10 @@ public abstract class BaseRxActivity extends BaseActivity {
      * @param <T> 泛型Model
      * @return
      */
-    public <T> ObservableTransformer<BaseHttpBean<T>, T> handleResult() {
+    public <T, V> ObservableTransformer<BaseHttpBean<T, V>, T> handleResult() {
         return upstream ->
                 upstream.flatMap(result -> {
-                    if (Global.CODE_SUCCESS.equals(result.getExecCode())) {
+                    if (HttpCode.SUCCESS.equals(result.getExecCode())) {
                         return createData(result.getExecData());
                     } else if (!needHandlerResult(result)) {
                         return Observable.error(new Exception(result.getExecMsg()));
@@ -55,40 +55,51 @@ public abstract class BaseRxActivity extends BaseActivity {
         });
     }
 
-    public boolean addRxStop(Subscription subscription) {
-        if (mSubscription2Stop == null) {
+    public boolean addRxStop(Disposable disposable) {
+        if (mDisposable2Stop == null) {
             throw new IllegalStateException("addUtilStop should be called between onStart and onStop");
         }
-        mSubscription2Stop.add(subscription);
+        mDisposable2Stop.add(disposable);
         return true;
     }
 
-    public boolean addRxDestroy(Subscription subscription) {
-        if (mSubscription2Destroy == null) {
+    public boolean addRxDestroy(Disposable disposable) {
+        if (mDisposable2Destroy == null) {
             throw new IllegalStateException("addUtilDestroy should be called between onCreate and onDestroy");
         }
-        mSubscription2Destroy.add(subscription);
+        mDisposable2Destroy.add(disposable);
         return true;
     }
 
-    public void remove(Subscription subscription) {
-        if (mSubscription2Stop == null && mSubscription2Destroy == null) {
+    public void remove(Disposable disposable) {
+        if (mDisposable2Stop == null && mDisposable2Destroy == null) {
             throw new IllegalStateException("remove should be not called after onDestroy");
         }
-        if (mSubscription2Stop != null) {
-            mSubscription2Stop.remove(subscription);
+        if (mDisposable2Stop != null) {
+            mDisposable2Stop.remove(disposable);
         }
-        if (mSubscription2Destroy != null) {
-            mSubscription2Destroy.remove(subscription);
+        if (mDisposable2Destroy != null) {
+            mDisposable2Destroy.remove(disposable);
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mSubscription2Stop == null) {
+        if (mDisposable2Stop == null) {
             throw new IllegalStateException("onStop called multiple times or onStart not celled");
         }
-//        mSubscription2Stop.
+        mDisposable2Stop.dispose();
+        mDisposable2Stop = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable2Destroy == null) {
+            throw new IllegalStateException("on Destroy called multiple times or onCreate not called");
+        }
+        mDisposable2Destroy.dispose();
+        mDisposable2Destroy = null;
     }
 }

@@ -2,6 +2,7 @@ package android.forbest.android.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.forbest.android.net.HttpManager;
 
 /**
  * Description: 自定义Application
@@ -21,5 +22,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+        HttpManager.getInstance().init(this);
     }
 }

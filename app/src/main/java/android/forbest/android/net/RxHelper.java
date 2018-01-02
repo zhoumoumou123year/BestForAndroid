@@ -1,10 +1,7 @@
 package android.forbest.android.net;
 
-import android.forbest.android.app.Global;
 import android.forbest.android.base.BaseHttpBean;
 import android.forbest.android.exception.ApiException;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -52,11 +49,11 @@ public class RxHelper {
      * @param <T> execData 可以Void
      * @param <L> execDatas
      */
-    public class ExecDataListFunc<T, L> implements Func1<BaseHttpBean<T, L>, List<L>> {
+    public class ExecDataListFunc<T, L> implements Func1<BaseHttpBean<T, L>, L> {
 
         @Override
-        public List<L> call(BaseHttpBean<T, L> baseHttpBean) {
-            if (!Global.CODE_SUCCESS.equals(baseHttpBean.getExecCode())) {
+        public L call(BaseHttpBean<T, L> baseHttpBean) {
+            if (!HttpCode.SUCCESS.equals(baseHttpBean.getExecCode())) {
                 throw new ApiException(Integer.valueOf(baseHttpBean.getExecCode()), baseHttpBean.getExecMsg());
             }
             return baseHttpBean.getExecDatas();
