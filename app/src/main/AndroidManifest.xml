@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="android.forbest.android">
+          package="com.forbest.android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -11,13 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="android.forbest.android.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity android:name=".business.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
