@@ -10,10 +10,10 @@ import io.reactivex.functions.Function;
  * @Date : 2018/1/5.
  */
 
-public class RxFunction<T> implements Function<BaseHttpBean<T, Void>, T> {
+public class RxFunction<T> implements Function<BaseHttpBean<T>, T> {
 
     @Override
-    public T apply(BaseHttpBean<T, Void> httpBean) throws Exception {
+    public T apply(BaseHttpBean<T> httpBean) throws Exception {
         String resultCode = httpBean.getExecCode();
         if (!HttpCode.SUCCESS.equals(resultCode)) {
 

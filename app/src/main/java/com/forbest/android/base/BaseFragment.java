@@ -3,6 +3,7 @@ package com.forbest.android.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment extends Fragment {
+    protected String TAG;
     private Unbinder unbinder;
     private ProgressDialog dialog;
     private OnFragmentInteractionListener mListener;
@@ -30,8 +32,15 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(), container, false);
         unbinder = ButterKnife.bind(this, view);
+        TAG = getContext().getPackageName() + "." + getClass().getSimpleName();
         initData();
         return view;
+    }
+
+    public void onButtonPressed(Intent intent) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(intent);
+        }
     }
 
     @Override
@@ -49,10 +58,6 @@ public abstract class BaseFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Intent intent);
     }
 
     protected abstract void initData();
@@ -79,5 +84,9 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Intent intent);
     }
 }

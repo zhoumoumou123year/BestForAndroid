@@ -32,7 +32,7 @@ public abstract class BaseRxActivity extends BaseActivity {
      * @param <T> 泛型Model
      * @return
      */
-    public <T, V> ObservableTransformer<BaseHttpBean<T, V>, T> handleResult() {
+    public <T> ObservableTransformer<BaseHttpBean<T>, T> handleResult() {
         return upstream ->
                 upstream.flatMap(result -> {
                     if (HttpCode.SUCCESS.equals(result.getExecCode())) {

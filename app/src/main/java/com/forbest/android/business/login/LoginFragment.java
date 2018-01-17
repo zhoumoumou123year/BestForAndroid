@@ -4,12 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.forbest.android.R;
 import com.forbest.android.base.BaseFragment;
+import com.forbest.android.util.TextUtil;
+import com.forbest.android.util.ToastUtil;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +34,12 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private LoginContact.Presenter mPresenter;
+
+    @BindView(R.id.username)
+    EditText mUserName;
+    @BindView(R.id.password)
+    EditText mPassWord;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -66,38 +76,43 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
         return R.layout.fragment_login;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @OnClick({R.id.email_sign_in_button})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.email_sign_in_button:
+                if (!checkLogin()) {
+                    return;
+                }
+                String userName = mUserName.getText().toString().trim();
+                String password = mPassWord.getText().toString().trim();
+                mPresenter.login(getContext(), userName, password, TAG, 0, true);
+                break;
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    /**
+     * 登录校验
+     */
+    public boolean checkLogin() {
+        if (TextUtil.isEmpty(mUserName.getText().toString().trim())) {
+            ToastUtil.show(getString(R.string.place_input_username));
+            return false;
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        if (TextUtil.isEmpty(mPassWord.getText().toString().trim())) {
+            ToastUtil.show(getString(R.string.place_input_password));
+            return false;
+        }
+        return true;
+     }
 
     @Override
     public void setPresenter(LoginContact.Presenter presenter) {
-
+        this.mPresenter = presenter;
     }
 
     @Override
     public void onError(int whichRequest, Throwable throwable) {
-
+        ToastUtil.show("");
     }
 
     @Override
@@ -112,21 +127,7 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
 
     @Override
     public void showLoginResult(LoginBean loginBean) {
-
+        ToastUtil.show("登录成功");
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

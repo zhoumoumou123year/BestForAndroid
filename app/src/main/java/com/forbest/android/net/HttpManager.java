@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.forbest.android.BuildConfig;
 import com.forbest.android.app.Global;
+import com.forbest.android.app.MyApplication;
 import com.forbest.android.base.BaseUrl;
 import com.forbest.android.util.FileUtil;
 import com.forbest.android.util.LogUtil;
@@ -21,7 +22,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -59,6 +60,10 @@ public class HttpManager {
      */
     private boolean mIsUseCache;
     private int mMaxCacheTime = 60;
+
+    private HttpManager() {
+        init(MyApplication.getApplication());
+    }
 
     /**
      * 双重锁单例模式
@@ -179,7 +184,7 @@ public class HttpManager {
                 .baseUrl(BaseUrl.BASE_URL)
                 .client(mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 

@@ -1,5 +1,7 @@
 package com.forbest.android.business.login;
 
+import android.content.Context;
+
 import com.forbest.android.base.BasePresenter;
 import com.forbest.android.base.BaseView;
 
@@ -19,7 +21,7 @@ public interface LoginContact {
 
     interface Presenter extends BasePresenter {
 
-        void login(String userName, String password);
+        void login(Context context, String userName, String password, String key,int whichRequest ,boolean isShowDialog);
 
     }
 }

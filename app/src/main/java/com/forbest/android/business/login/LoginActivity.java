@@ -1,5 +1,7 @@
 package com.forbest.android.business.login;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -12,7 +14,7 @@ import com.forbest.android.base.BaseActivity;
  * @Date : 2018/1/2.
  */
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements LoginFragment.OnFragmentInteractionListener {
 
     private LoginFragment loginFragment;
 
@@ -26,6 +28,9 @@ public class LoginActivity extends BaseActivity {
         initFragment();
     }
 
+    /**
+     * 初始化fragment
+     */
     private void initFragment() {
         loginFragment = LoginFragment.newInstance();
         FragmentManager fm = getSupportFragmentManager();
@@ -39,7 +44,16 @@ public class LoginActivity extends BaseActivity {
         initPresenter();
     }
 
+    /**
+     * 初始化并为fragment设置presenter
+     */
     private void initPresenter() {
         LoginPresenter presenter = new LoginPresenter(loginFragment);
+        loginFragment.setPresenter(presenter);
+    }
+
+    @Override
+    public void onFragmentInteraction(Intent intent) {
+
     }
 }

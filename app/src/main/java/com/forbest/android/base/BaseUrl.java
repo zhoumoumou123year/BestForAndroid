@@ -8,5 +8,5 @@ package com.forbest.android.base;
 
 public interface BaseUrl {
 
-    String BASE_URL = "";
+    String BASE_URL = "http://10.0.1.87:8080/card-service-web/";
 }
