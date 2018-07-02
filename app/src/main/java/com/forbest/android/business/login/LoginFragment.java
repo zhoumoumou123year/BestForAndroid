@@ -112,7 +112,7 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
 
     @Override
     public void onError(int whichRequest, Throwable throwable) {
-        ToastUtil.show("");
+        ToastUtil.show(throwable.getMessage());
     }
 
     @Override

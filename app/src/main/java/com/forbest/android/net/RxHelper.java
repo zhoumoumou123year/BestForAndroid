@@ -36,7 +36,7 @@ public class RxHelper {
         @Override
         public T apply(BaseHttpBean<T> baseHttpBean) {
             if (!HttpCode.SUCCESS.equals(baseHttpBean.getExecCode())) {
-                throw new ApiException(Integer.valueOf(baseHttpBean.getExecCode()), baseHttpBean.getExecMsg());
+                throw new ApiException(baseHttpBean.getExecCode(), baseHttpBean.getExecMsg());
             }
             return baseHttpBean.getExecData();
         }

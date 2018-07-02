@@ -8,16 +8,16 @@ package com.forbest.android.exception;
 
 public class ApiException extends RuntimeException {
 
-    public int code;
+    public String code;
 
     public String message;
 
-    public ApiException(int code, String message) {
+    public ApiException(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
