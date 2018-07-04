@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bestfor.android.ImageLoader;
 import com.forbest.android.R;
 import com.forbest.android.base.BaseFragment;
 import com.forbest.android.util.TextUtil;
@@ -40,6 +42,8 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
     EditText mUserName;
     @BindView(R.id.password)
     EditText mPassWord;
+    @BindView(R.id.iv_logo)
+    ImageView mIvLogo;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -68,7 +72,8 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
 
     @Override
     protected void initData() {
-
+        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530698138366&di=49d3116d9c7ca12c97c3f95fbf5e2f04&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F72f082025aafa40f99d4e82aa764034f78f01932.jpg";
+        ImageLoader.getInstance().displayRoundImage(this.getContext(), url, mIvLogo,R.mipmap.ic_launcher, 20);
     }
 
     @Override
