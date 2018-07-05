@@ -2,6 +2,7 @@ package com.forbest.android.business.login;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 

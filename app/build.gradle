@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'walle'
 
 android {
     compileSdkVersion 27
@@ -10,10 +11,57 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    signingConfigs {
         release {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile rootProject.file(KEYSTORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+        }
+    }
+    buildTypes {
+        //调试版本，无混淆
+        debug {
             minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        //发布版本，有混淆
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        //开发环境
+        develop {
+            buildConfigField "int", "ENV_TYPE", "1"
+            applicationId 'com.forbest.android.develop'
+            manifestPlaceholders = [
+                    app_name: "ForBestAndroid_develop",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
+        }
+        //测试环境
+        check {
+            buildConfigField "int", "ENV_TYPE", "2"
+            applicationId 'com.forbest.android.check'
+            manifestPlaceholders = [
+                    app_name: "ForBestAndroid_check",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
+        }
+        //生产环境
+        product {
+            buildConfigField "int", "ENV_TYPE", "3"
+            applicationId 'com.forbest.android.product'
+            manifestPlaceholders = [
+                    app_name: "ForBestAndroid_product",
+                    app_icon: "@mipmap/ic_launcher"
+            ]
         }
     }
     packagingOptions {
@@ -22,6 +70,14 @@ android {
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+    }
+    walle {
+        // 指定渠道包的输出路径
+        apkOutputFolder = new File("${project.buildDir}/outputs/channels");
+        // 定制渠道包的APK的文件名称
+        apkFileNameFormat = '${projectName}-${channel}-${buildType}-v${versionName}-${buildTime}.apk';
+        // 渠道配置文件
+        channelFile = new File("${project.getProjectDir()}/channel")
     }
 }
 
@@ -36,8 +92,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation project(':imageloader')
+    implementation 'com.meituan.android.walle:library:1.1.6'
 }

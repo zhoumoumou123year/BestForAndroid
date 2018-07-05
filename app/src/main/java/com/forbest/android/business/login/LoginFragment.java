@@ -1,7 +1,5 @@
 package com.forbest.android.business.login;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -13,6 +11,7 @@ import com.forbest.android.R;
 import com.forbest.android.base.BaseFragment;
 import com.forbest.android.util.TextUtil;
 import com.forbest.android.util.ToastUtil;
+import com.forbest.android.vo.login.LoginBean;
 
 import butterknife.BindView;
 import butterknife.OnClick;

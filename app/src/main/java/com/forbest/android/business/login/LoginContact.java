@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.forbest.android.base.BasePresenter;
 import com.forbest.android.base.BaseView;
+import com.forbest.android.vo.login.LoginBean;
 
 /**
  * @Description:

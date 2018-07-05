@@ -3,6 +3,7 @@ package com.forbest.android.business.login;
 import android.content.Context;
 
 import com.forbest.android.net.RxObserver;
+import com.forbest.android.vo.login.LoginBean;
 
 /**
  * @Description:

@@ -1,9 +1,7 @@
 package com.forbest.android.net;
 
 import com.forbest.android.base.BaseHttpBean;
-import com.forbest.android.business.login.LoginBean;
 import com.forbest.android.exception.ApiException;
-import com.forbest.android.util.LogUtil;
 
 import io.reactivex.functions.Function;
 

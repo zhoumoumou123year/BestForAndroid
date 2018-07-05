@@ -1,7 +1,7 @@
 package com.forbest.android.api;
 
 import com.forbest.android.base.BaseHttpBean;
-import com.forbest.android.business.login.LoginBean;
+import com.forbest.android.vo.login.LoginBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

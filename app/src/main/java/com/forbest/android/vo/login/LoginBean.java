@@ -1,4 +1,4 @@
-package com.forbest.android.business.login;
+package com.forbest.android.vo.login;
 
 /**
  * @Description: 登录
