@@ -1,5 +1,6 @@
 package com.forbest.android.base;
 
+import com.forbest.android.net.RxManager;
 import com.forbest.android.util.ToastUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,4 +38,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtil.show(msg);
     }
 
+    @Override
+    protected void onDestroy() {
+        RxManager.getInstance().clear(TAG);
+        super.onDestroy();
+    }
 }

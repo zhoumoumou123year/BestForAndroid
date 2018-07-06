@@ -63,7 +63,7 @@ public class RxManager {
      * @param key
      * @param disposable
      */
-    public void clear(String key, Disposable disposable) {
+    public void clear(String key) {
         Set<String> set = mDisposableMap.keySet();
         if (set.contains(key)) {
             CompositeDisposable compositeDisposable = mDisposableMap.get(key);
