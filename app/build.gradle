@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'walle'
+apply from: 'tinkerpatch.gradle'
 
 android {
     compileSdkVersion 27
@@ -8,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -96,4 +97,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation project(':imageloader')
     implementation 'com.meituan.android.walle:library:1.1.6'
+    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    implementation 'com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.8'
+    implementation 'com.android.support:multidex:1.0.3'
 }

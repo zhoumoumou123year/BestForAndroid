@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bestfor.android.ImageLoader;
 import com.forbest.android.R;
@@ -72,7 +73,8 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
     @Override
     protected void initData() {
         String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530698138366&di=49d3116d9c7ca12c97c3f95fbf5e2f04&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F72f082025aafa40f99d4e82aa764034f78f01932.jpg";
-        ImageLoader.getInstance().displayRoundImage(this.getContext(), url, mIvLogo,R.mipmap.ic_launcher, 20);
+//        ImageLoader.getInstance().displayRoundImage(this.getContext(), url, mIvLogo,R.mipmap.ic_launcher, 20);
+        Toast.makeText(getContext(), "我又悄悄的改了个Bug，哈哈", Toast.LENGTH_SHORT).show();
     }
 
     @Override
