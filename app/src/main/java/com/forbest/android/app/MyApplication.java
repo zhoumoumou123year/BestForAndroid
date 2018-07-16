@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.forbest.android.BuildConfig;
 import com.forbest.android.net.HttpManager;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.tinker.lib.listener.DefaultPatchListener;
 import com.tencent.tinker.lib.patch.UpgradePatch;
 import com.tencent.tinker.lib.reporter.DefaultLoadReporter;
@@ -60,8 +61,18 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // init LeakCanary
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // Normal init code here
         mApplication = this;
+        // init httpManager
         HttpManager.getInstance().init(this);
+        // init tinker
         initTinkerPatch();
     }
 
