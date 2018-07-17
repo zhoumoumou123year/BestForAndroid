@@ -104,4 +104,6 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.blankj:utilcode:1.17.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-12'//没有使用特殊Header，可以不加这行
 }

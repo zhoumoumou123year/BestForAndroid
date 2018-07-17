@@ -1,5 +1,6 @@
 package com.forbest.android.business.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.forbest.android.R;
 import com.forbest.android.base.BaseFragment;
+import com.forbest.android.business.main.MainActivity;
 import com.forbest.android.vo.login.LoginBean;
 
 import butterknife.BindView;
@@ -133,6 +135,8 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
     @Override
     public void showLoginResult(LoginBean loginBean) {
         ToastUtils.showShort("登录成功");
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
     }
 
 }
