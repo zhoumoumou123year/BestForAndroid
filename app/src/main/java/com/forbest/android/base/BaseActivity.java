@@ -1,10 +1,11 @@
 package com.forbest.android.base;
 
-import com.forbest.android.net.RxManager;
-import com.forbest.android.util.ToastUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.forbest.android.net.RxManager;
 
 import butterknife.ButterKnife;
 
@@ -35,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initData();
 
     public void showToast(String msg) {
-        ToastUtil.show(msg);
+        ToastUtils.showShort(msg);
     }
 
     @Override

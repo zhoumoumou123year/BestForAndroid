@@ -5,8 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.forbest.android.exception.ApiException;
-import com.forbest.android.util.ToastUtil;
 
 import java.io.EOFException;
 import java.net.BindException;
@@ -63,11 +63,11 @@ public abstract class RxObserver<T> implements Observer<T> {
             mDialog.dismiss();
         }
         if (e instanceof EOFException || e instanceof ConnectException || e instanceof SocketException || e instanceof BindException || e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
-            ToastUtil.show("网络异常，请稍后重试！");
+            ToastUtils.showShort("网络异常，请稍后重试！");
         } else if (e instanceof ApiException) {
             onError(mWhichRequest, e);
         } else {
-            ToastUtil.show("未知错误！");
+            ToastUtils.showShort("未知错误！");
         }
     }
 

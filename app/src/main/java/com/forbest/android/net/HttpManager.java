@@ -2,13 +2,13 @@ package com.forbest.android.net;
 
 import android.content.Context;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.forbest.android.BuildConfig;
 import com.forbest.android.app.Global;
 import com.forbest.android.app.MyApplication;
 import com.forbest.android.base.BaseUrl;
 import com.forbest.android.util.FileUtil;
-import com.forbest.android.util.LogUtil;
-import com.forbest.android.util.NetworkUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,6 @@ public class HttpManager {
      */
     private static final String HTTP_CACHE_NAME = "HttpCache";
     private static final int HTTP_CACHE_MAX_SIZE = 1024 * 1024;
-    private static final String TAG = "OkHttp";
     /**
      * 设置默认连接超时时间
      */
@@ -122,26 +121,26 @@ public class HttpManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 // 如果网络不可用或使用缓存
-                if (!NetworkUtil.isNetworkConnected(mContext) || mIsUseCache) {
+                if (!NetworkUtils.isConnected() || mIsUseCache) {
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
-                    LogUtil.d(TAG, "网络不可用请求拦截");
-                } else if (NetworkUtil.isNetworkConnected(mContext) && !mIsUseCache) {
+                    LogUtils.d("网络不可用请求拦截");
+                } else if (NetworkUtils.isConnected() && !mIsUseCache) {
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_NETWORK)
                             .build();
-                    LogUtil.d(TAG, "网络可用请求拦截");
+                    LogUtils.d("网络可用请求拦截");
                 }
                 Response response = chain.proceed(request);
-                if (NetworkUtil.isNetworkConnected(mContext)) {
-                    LogUtil.d(TAG, "网络可用响应拦截");
+                if (NetworkUtils.isConnected()) {
+                    LogUtils.d("网络可用响应拦截");
                     response = response.newBuilder()
                             .header("Cache-Control", "public,max-age=" + mMaxCacheTime)
                             .removeHeader("Pragma")
                             .build();
                 } else {
-                    LogUtil.d(TAG, "网络不可用响应拦截");
+                    LogUtils.d("网络不可用响应拦截");
                 }
                 return response;
             }

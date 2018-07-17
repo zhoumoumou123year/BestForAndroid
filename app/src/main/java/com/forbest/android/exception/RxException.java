@@ -1,8 +1,8 @@
 package com.forbest.android.exception;
 
 
-import com.forbest.android.util.LogUtil;
-import com.forbest.android.util.ToastUtil;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -17,8 +17,6 @@ import io.reactivex.functions.Consumer;
  */
 
 public class RxException<T extends Throwable> implements Consumer<T> {
-
-    private static final String TAG = "RxException";
 
     private static final String SOCKET_CONNECT_TIME_OUT = "socket网络连接超时，请检查您的网络状态！";
 
@@ -35,19 +33,19 @@ public class RxException<T extends Throwable> implements Consumer<T> {
     @Override
     public void accept(T t) throws Exception{
         if (t instanceof SocketTimeoutException) {
-            LogUtil.e(TAG, "onError: SocketTimeoutException----" + SOCKET_CONNECT_TIME_OUT);
-            ToastUtil.show(SOCKET_CONNECT_TIME_OUT);
+            LogUtils.e("onError: SocketTimeoutException----" + SOCKET_CONNECT_TIME_OUT);
+            ToastUtils.showShort(SOCKET_CONNECT_TIME_OUT);
             onError.accept(new Throwable(SOCKET_CONNECT_TIME_OUT));
         } else if (t instanceof ConnectException) {
-            LogUtil.e(TAG, "onError: ConnectException----" + CONNECT_EXCEPTION);
-            ToastUtil.show(CONNECT_EXCEPTION);
+            LogUtils.e("onError: ConnectException----" + CONNECT_EXCEPTION);
+            ToastUtils.showShort(CONNECT_EXCEPTION);
             onError.accept(new Throwable(CONNECT_EXCEPTION));
         } else if (t instanceof UnknownHostException) {
-            LogUtil.e(TAG, "onError: UnknowHostException");
-            ToastUtil.show(UNKNOW_EXCEPTION);
+            LogUtils.e("onError: UnknowHostException");
+            ToastUtils.showShort(UNKNOW_EXCEPTION);
             onError.accept(new Throwable(UNKNOW_EXCEPTION));
         } else {
-            LogUtil.e(TAG, "onError: ----" + t.getMessage());
+            LogUtils.e("onError: ----" + t.getMessage());
             onError.accept(t);
         }
     }

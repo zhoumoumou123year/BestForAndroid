@@ -7,11 +7,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bestfor.android.ImageLoader;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.forbest.android.R;
 import com.forbest.android.base.BaseFragment;
-import com.forbest.android.util.TextUtil;
-import com.forbest.android.util.ToastUtil;
 import com.forbest.android.vo.login.LoginBean;
 
 import butterknife.BindView;
@@ -100,12 +99,12 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
      * 登录校验
      */
     public boolean checkLogin() {
-        if (TextUtil.isEmpty(mUserName.getText().toString().trim())) {
-            ToastUtil.show(getString(R.string.place_input_username));
+        if (StringUtils.isEmpty(mUserName.getText().toString().trim())) {
+            ToastUtils.showShort(getString(R.string.place_input_username));
             return false;
         }
-        if (TextUtil.isEmpty(mPassWord.getText().toString().trim())) {
-            ToastUtil.show(getString(R.string.place_input_password));
+        if (StringUtils.isEmpty(mPassWord.getText().toString().trim())) {
+            ToastUtils.showShort(getString(R.string.place_input_password));
             return false;
         }
         return true;
@@ -118,7 +117,7 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
 
     @Override
     public void onError(int whichRequest, Throwable throwable) {
-        ToastUtil.show(throwable.getMessage());
+        ToastUtils.showShort(throwable.getMessage());
     }
 
     @Override
@@ -133,7 +132,7 @@ public class LoginFragment extends BaseFragment implements LoginContact.View{
 
     @Override
     public void showLoginResult(LoginBean loginBean) {
-        ToastUtil.show("登录成功");
+        ToastUtils.showShort("登录成功");
     }
 
 }
