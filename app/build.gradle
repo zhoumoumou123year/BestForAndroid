@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'walle'
 apply from: 'tinkerpatch.gradle'
 
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm', TimeZone.getTimeZone("GMT+8"))
+    return formattedDate
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -9,7 +15,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.0"
+        versionName APP_VERSION
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -79,6 +85,28 @@ android {
         apkFileNameFormat = '${projectName}-${channel}-${buildType}-v${versionName}-${buildTime}.apk';
         // 渠道配置文件
         channelFile = new File("${project.getProjectDir()}/channel")
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            // 新名字
+            def newName
+            // 时间戳
+            def timeNow = getDate()
+            // 输出文件夹
+            def outDirectory = variant.getPackageApplication().outputDirectory.getAbsolutePath() + "/" + timeNow
+            // 是否为Jenkins打包，输出路径不同
+            if ("true".equals(IS_JENKINS)) {
+                // BUILD_PATH为服务器输出路径
+                outDirectory = BUILD_PATH_JENKINS + "/" + timeNow
+                //BestForAndroid_v1.0.0_dev_debug_201807191647.apk
+                newName = APP_NAME + '_v' + APP_VERSION + '_' + ENV_TYPE + '_' + variant.buildType.name + '_' + timeNow + '.apk'
+            } else {
+                //本机打包输出在本机路径
+                newName = APP_NAME + "_v" + APP_VERSION + '_' + ENV_TYPE + '_' + variant.buildType.name + '_' + timeNow + '.apk'
+            }
+            variant.getPackageApplication().outputDirectory = new File(outDirectory)
+            outputFileName = newName
+        }
     }
 }
 
